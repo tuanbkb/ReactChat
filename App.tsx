@@ -1,10 +1,10 @@
-import LoginScreen from './src/screens/auth/LoginScreen';
+import AppNavigator from './src/navigation/AppNavigation';
 import ThemeProvider from './src/theme/theme.provider';
 
 function App() {
   return (
     <ThemeProvider>
-      <LoginScreen />
+      <AppNavigator />
     </ThemeProvider>
   );
 }

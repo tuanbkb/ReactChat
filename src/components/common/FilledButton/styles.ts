@@ -5,7 +5,8 @@ export const buttonContainer: ThemedStyle<ViewStyle> = ({colors, spacing}) => ({
   flexDirection: 'row',
   justifyContent: 'center',
   backgroundColor: colors.primary,
-  padding: spacing.xs
+  padding: spacing.sm,
+  borderRadius: spacing.xl,
 });
 
 export const buttonText: ThemedStyle<TextStyle> = ({colors, fontSizes}) => ({
@@ -13,3 +14,7 @@ export const buttonText: ThemedStyle<TextStyle> = ({colors, fontSizes}) => ({
   fontWeight: 'bold',
   color: colors.onPrimary
 });
+
+export const fillMaxWidth: ThemedStyle<ViewStyle> = () => ({
+  width: '100%'
+})
