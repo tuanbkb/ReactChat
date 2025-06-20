@@ -1,4 +1,5 @@
 export const spacing = {
+  xxxxs: 1,
   xxxs: 2,
   xxs: 4,
   xs: 8,
