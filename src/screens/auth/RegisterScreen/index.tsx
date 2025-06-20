@@ -37,6 +37,7 @@ export default function RegisterScreen() {
           onChangeText={setUsername}
           error={usernameError}
           setError={setUsernameError}
+          placeholder="Enter your username"
         />
       </View>
       <View style={themed(styles.inputContainer)}>
@@ -46,6 +47,7 @@ export default function RegisterScreen() {
           onChangeText={setEmail}
           error={emailError}
           setError={setEmailError}
+          placeholder="Enter your email"
         />
       </View>
       <View style={themed(styles.inputContainer)}>
@@ -56,6 +58,7 @@ export default function RegisterScreen() {
           secureTextEntry={true}
           error={passwordError}
           setError={setPasswordError}
+          placeholder="Enter your password"
         />
       </View>
       <View style={themed(styles.inputContainer)}>
@@ -66,6 +69,7 @@ export default function RegisterScreen() {
           secureTextEntry={true}
           error={confirmPasswordError}
           setError={setConfirmPasswordError}
+          placeholder="Confirm your password"
         />
       </View>
       <View style={themed(styles.divider)} />

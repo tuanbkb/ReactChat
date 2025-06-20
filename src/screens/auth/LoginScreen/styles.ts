@@ -19,7 +19,8 @@ export const inputContainer: ThemedStyle<ViewStyle> = ({spacing}) => ({
   marginVertical: spacing.xs,
 });
 
-export const inputLabel: ThemedStyle<TextStyle> = ({colors, fontSizes}) => ({
+export const inputLabel: ThemedStyle<TextStyle> = ({colors, fontSizes, spacing}) => ({
+  marginLeft: spacing.lg,
   color: colors.onBackground,
   fontSize: fontSizes.labelLarge,
   fontWeight: 'bold',
