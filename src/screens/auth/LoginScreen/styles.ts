@@ -14,13 +14,6 @@ export const text: ThemedStyle<TextStyle> = ({colors, fontSizes}) => ({
   fontSize: fontSizes.bodyMedium
 });
 
-export const title: ThemedStyle<TextStyle> = ({colors, fontSizes}) => ({
-  color: colors.onBackground,
-  fontSize: fontSizes.headlineLarge,
-  fontWeight: 'bold',
-  textAlign: 'center',
-});
-
 export const inputContainer: ThemedStyle<ViewStyle> = ({spacing}) => ({
   gap: spacing.xxs,
   marginVertical: spacing.xs,
@@ -34,4 +27,21 @@ export const inputLabel: ThemedStyle<TextStyle> = ({colors, fontSizes}) => ({
 
 export const divider: ThemedStyle<ViewStyle> = ({spacing}) => ({
   marginVertical: spacing.xs,
+});
+
+export const forgotPasswordContainer: ThemedStyle<ViewStyle> = () => ({
+  flexDirection: 'row',
+  justifyContent: 'center',
+});
+
+export const forgotPasswordText: ThemedStyle<TextStyle> = ({colors, fontSizes}) => ({
+  color: colors.outline,
+  fontSize: fontSizes.labelLarge,
+  fontStyle: 'italic',
+});
+
+export const forgotPasswordLink: ThemedStyle<TextStyle> = ({colors, fontSizes}) => ({
+  color: colors.primary,
+  fontSize: fontSizes.labelLarge,
+  fontWeight: 'bold',
 });

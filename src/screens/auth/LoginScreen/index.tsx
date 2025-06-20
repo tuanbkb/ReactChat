@@ -1,21 +1,24 @@
-import { useNavigation } from '@react-navigation/native';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Button from '../../../components/common/Button';
-import { AuthStackNames } from '../../../navigation/routes';
+import OutlinedTextField from '../../../components/common/OutlinedTextField';
 import { useAppTheme } from '../../../theme/theme.provider';
 import * as styles from './styles';
 import useLoginScreen from './useLoginScreen';
-import OutlinedTextField from '../../../components/common/OutlinedTextField';
 
 export default function LoginScreen() {
   const { themed } = useAppTheme();
-  const navigation = useNavigation();
 
-  const { username, setUsername, password, setPassword, handleLogin, handleForgetPassword } = useLoginScreen();
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    handleLogin,
+    handleForgetPassword,
+  } = useLoginScreen();
 
   return (
     <View style={themed(styles.container)}>
-      <Text style={themed(styles.title)}>Login to ReactChat</Text>
       <View style={themed(styles.inputContainer)}>
         <Text style={themed(styles.inputLabel)}>Username:</Text>
         <OutlinedTextField
@@ -35,7 +38,12 @@ export default function LoginScreen() {
       <View style={themed(styles.divider)} />
       <Button text="Login" onPress={handleLogin} />
       <View style={themed(styles.divider)} />
-      <Button text="Forget Password?" onPress={handleForgetPassword} style="outlined" />
+      <View style={themed(styles.forgotPasswordContainer)}>
+        <Text style={themed(styles.forgotPasswordText)}>Forgot your password?  </Text>
+        <TouchableOpacity onPress={handleForgetPassword}>
+          <Text style={themed(styles.forgotPasswordLink)}>Reset here!</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

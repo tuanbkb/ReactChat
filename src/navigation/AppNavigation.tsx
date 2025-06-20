@@ -2,36 +2,39 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AuthStackRoutes, MainStackRoutes } from "./routes";
 import { useAppTheme } from "../theme/theme.provider";
 import { NavigationContainer } from "@react-navigation/native";
+import { AuthStackParamList } from "./paramLists";
 
 const AppStack = createNativeStackNavigator();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+const MainStack = createNativeStackNavigator();
 
-function AuthStack() {
+function AuthStackNavigator() {
   return (
-    <AppStack.Navigator>
+    <AuthStack.Navigator>
       {AuthStackRoutes.map(route => (
-        <AppStack.Screen
+        <AuthStack.Screen
           key={route.name}
           name={route.name}
           component={route.component}
           options={route.options}
         />
       ))}
-    </AppStack.Navigator>
+    </AuthStack.Navigator>
   );
 }
 
-function MainStack() {
+function MainStackNavigator() {
   return (
-    <AppStack.Navigator>
+    <MainStack.Navigator>
       {MainStackRoutes.map(route => (
-        <AppStack.Screen
+        <MainStack.Screen
           key={route.name}
           name={route.name}
           component={route.component}
           options={route.options}
         />
       ))}
-    </AppStack.Navigator>
+    </MainStack.Navigator>
   );
 }
 
@@ -54,12 +57,12 @@ export default function AppNavigator() {
         {isLoggedIn ? (
           <AppStack.Screen
             name="Main"
-            component={MainStack}
+            component={MainStackNavigator}
           />
         ) : (
           <AppStack.Screen
             name="Auth"
-            component={AuthStack}
+            component={AuthStackNavigator}
           />
         )}
       </AppStack.Navigator>
