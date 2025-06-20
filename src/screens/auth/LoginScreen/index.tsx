@@ -15,6 +15,10 @@ export default function LoginScreen() {
     setPassword,
     handleLogin,
     handleForgetPassword,
+    usernameError,
+    setUsernameError,
+    passwordError,
+    setPasswordError,
   } = useLoginScreen();
 
   return (
@@ -25,6 +29,8 @@ export default function LoginScreen() {
           value={username}
           onChangeText={setUsername}
           placeholder="Username"
+          error={usernameError}
+          setError={setUsernameError}
         />
       </View>
       <View style={themed(styles.inputContainer)}>
@@ -33,6 +39,9 @@ export default function LoginScreen() {
           value={password}
           onChangeText={setPassword}
           placeholder="Password"
+          error={passwordError}
+          setError={setPasswordError}
+          secureTextEntry={true}
         />
       </View>
       <View style={themed(styles.divider)} />
