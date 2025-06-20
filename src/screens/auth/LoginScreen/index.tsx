@@ -31,6 +31,7 @@ export default function LoginScreen() {
           placeholder="Username"
           error={usernameError}
           setError={setUsernameError}
+          leadingIconName='person'
         />
       </View>
       <View style={themed(styles.inputContainer)}>
@@ -42,6 +43,7 @@ export default function LoginScreen() {
           error={passwordError}
           setError={setPasswordError}
           secureTextEntry={true}
+          leadingIconName='key'
         />
       </View>
       <View style={themed(styles.divider)} />
