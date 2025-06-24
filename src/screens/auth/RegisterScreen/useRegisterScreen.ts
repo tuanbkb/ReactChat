@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../redux/hook';
+import { selectError, selectLoading, signUpEmailPassword, userActions } from '../../../stores/user.slice';
 
 export default function useRegisterScreen() {
   const [username, setUsername] = useState<string>('');
@@ -12,6 +14,15 @@ export default function useRegisterScreen() {
   const [confirmPasswordError, setConfirmPasswordError] = useState<
     string | null
   >(null);
+
+  const loading = useAppSelector(selectLoading);
+  const error = useAppSelector(selectError);
+  const dispatch = useAppDispatch();
+
+  // Reset error when component mounts
+  useEffect(() => {
+    dispatch(userActions.clearError());
+  }, [dispatch]);
 
   const validateInput = () => {
     let isValid = true;
@@ -36,7 +47,7 @@ export default function useRegisterScreen() {
 
   const handleRegister = () => {
     if (validateInput()) {
-      console.log('Registering user...');
+      dispatch(signUpEmailPassword({ username, email, password }));
     }
   };
 
@@ -58,5 +69,7 @@ export default function useRegisterScreen() {
     setPasswordError,
     confirmPasswordError,
     setConfirmPasswordError,
+    loading,
+    error,
   };
 }

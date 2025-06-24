@@ -1,4 +1,9 @@
-import { KeyboardAvoidingView, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Text,
+  View,
+} from 'react-native';
 import Button from '../../../components/common/Button';
 import OutlinedTextField from '../../../components/common/OutlinedTextField';
 import { useAppTheme } from '../../../theme/theme.provider';
@@ -6,7 +11,7 @@ import * as styles from './styles';
 import useRegisterScreen from './useRegisterScreen';
 
 export default function RegisterScreen() {
-  const { themed } = useAppTheme();
+  const { theme, themed } = useAppTheme();
 
   const {
     username,
@@ -26,6 +31,8 @@ export default function RegisterScreen() {
     setPasswordError,
     confirmPasswordError,
     setConfirmPasswordError,
+    loading,
+    error,
   } = useRegisterScreen();
 
   return (
@@ -72,8 +79,15 @@ export default function RegisterScreen() {
           placeholder="Confirm your password"
         />
       </View>
+      {error && <Text style={themed(styles.error)}>{error}</Text>}
       <View style={themed(styles.divider)} />
       <Button text="Register" onPress={handleRegister} />
+
+      {loading && (
+        <View style={themed(styles.loadingOverlay)}>
+          <ActivityIndicator size="large" color={theme.colors.inversePrimary} />
+        </View>
+      )}
     </KeyboardAvoidingView>
   );
 }

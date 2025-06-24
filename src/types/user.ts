@@ -1,8 +1,7 @@
 export interface User {
-  id: string;
+  uid: string;
   username: string;
   email: string;
-  profilePicturePath: string;
+  profilePicturePath: string | undefined;
   createdAt: Date;
-  updatedAt: Date;
 }
