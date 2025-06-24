@@ -1,13 +1,23 @@
-import auth from '@react-native-firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { User } from '../types/user';
+
+const auth = getAuth();
 
 export async function signInWithEmailPassword(
   email: string,
   password: string,
 ): Promise<User> {
   try {
-    const userCredential = await auth().signInWithEmailAndPassword(email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
     const userUid = userCredential.user.uid;
     return getUser(userUid);
   } catch (error: any) {
@@ -30,16 +40,20 @@ export async function signUpWithEmailPassword(
   password: string,
 ): Promise<User> {
   try {
-    const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
     const userUid = userCredential.user.uid;
-    
+
     await firestore().collection('users').doc(userUid).set({
       uid: userUid,
       username,
       email,
       createdAt: firestore.FieldValue.serverTimestamp(),
     });
-    
+
     return {
       uid: userUid,
       username,

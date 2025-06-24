@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../redux/hook';
 import { selectError, selectLoading, signUpEmailPassword, userActions } from '../../../stores/user.slice';
+import { Keyboard } from 'react-native';
 
 export default function useRegisterScreen() {
   const [username, setUsername] = useState<string>('');
@@ -46,6 +47,7 @@ export default function useRegisterScreen() {
   };
 
   const handleRegister = () => {
+    Keyboard.dismiss();
     if (validateInput()) {
       dispatch(signUpEmailPassword({ username, email, password }));
     }
