@@ -1,11 +1,19 @@
-import React, { useState, forwardRef } from 'react';
-import { KeyboardTypeOptions, Pressable, ReturnKeyTypeOptions, SubmitBehavior, Text, TextInput, View } from 'react-native';
-import * as styles from './styles';
-import { useAppTheme } from '../../../theme/theme.provider';
 import Icon from '@react-native-vector-icons/ionicons';
+import React, { forwardRef, useState } from 'react';
+import {
+  KeyboardTypeOptions,
+  Pressable,
+  ReturnKeyTypeOptions,
+  SubmitBehavior,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { useAppTheme } from '../../../theme/theme.provider';
+import * as styles from './styles';
 
 interface OutlinedTextFieldProps {
-  value: string;
+  defaultValue?: string;
   onChangeText: (value: string) => void;
   placeholder?: string;
   multiline?: boolean;
@@ -24,7 +32,7 @@ interface OutlinedTextFieldProps {
 const OutlinedTextField = forwardRef<TextInput, OutlinedTextFieldProps>(
   (
     {
-      value,
+      defaultValue,
       onChangeText,
       placeholder,
       multiline,
@@ -39,11 +47,13 @@ const OutlinedTextField = forwardRef<TextInput, OutlinedTextFieldProps>(
       submitBehavior,
       onSubmitEditing,
     },
-    ref
+    ref,
   ) => {
     const { theme, themed } = useAppTheme();
-    const [isFocused, setIsFocused] = useState(false);
-    const [isSecureTextEntry, setIsSecureTextEntry] = useState<boolean>(true);
+    const [isFocused, setIsFocused] = useState<boolean>(false);
+    const [isSecureTextEntry, setIsSecureTextEntry] = useState<boolean>(
+      secureTextEntry ?? false,
+    );
 
     const handleFocus = () => {
       setIsFocused(true);
@@ -55,7 +65,9 @@ const OutlinedTextField = forwardRef<TextInput, OutlinedTextFieldProps>(
 
     return (
       <View
-        style={isFocused ? themed(styles.overlayFocused) : themed(styles.overlay)}
+        style={
+          isFocused ? themed(styles.overlayFocused) : themed(styles.overlay)
+        }
       >
         <View
           style={[
@@ -73,8 +85,8 @@ const OutlinedTextField = forwardRef<TextInput, OutlinedTextFieldProps>(
           )}
           <TextInput
             ref={ref}
-            value={value}
-            onChangeText={onChangeText}
+            defaultValue={defaultValue}
+            onChangeText={(newValue) => onChangeText(newValue)}
             placeholder={placeholder}
             placeholderTextColor={theme.colors.onSurfaceVariant}
             multiline={multiline}
@@ -83,7 +95,7 @@ const OutlinedTextField = forwardRef<TextInput, OutlinedTextFieldProps>(
             onFocus={handleFocus}
             onBlur={handleBlur}
             style={themed(styles.textInput)}
-            secureTextEntry={secureTextEntry && isSecureTextEntry}
+            secureTextEntry={isSecureTextEntry ? true : false}
             keyboardType={keyboardType}
             returnKeyType={returnKeyType}
             onPress={() => setError?.(null)}
@@ -92,7 +104,7 @@ const OutlinedTextField = forwardRef<TextInput, OutlinedTextFieldProps>(
           />
 
           {secureTextEntry && (
-            <Pressable onPress={() => setIsSecureTextEntry(!isSecureTextEntry)}>
+            <Pressable onPress={() => setIsSecureTextEntry(prev => !prev)}>
               <Icon
                 name={isSecureTextEntry ? 'eye-off' : 'eye'}
                 size={24}
@@ -104,7 +116,7 @@ const OutlinedTextField = forwardRef<TextInput, OutlinedTextFieldProps>(
         {error && <Text style={themed(styles.errorText)}>{error}</Text>}
       </View>
     );
-  }
+  },
 );
 
 export default OutlinedTextField;

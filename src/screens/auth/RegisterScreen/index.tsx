@@ -20,13 +20,9 @@ export default function RegisterScreen() {
   const confirmPasswordRef = useRef<TextInput>(null);
 
   const {
-    username,
     setUsername,
-    email,
     setEmail,
-    password,
     setPassword,
-    confirmPassword,
     setConfirmPassword,
     handleRegister,
     usernameError,
@@ -46,7 +42,6 @@ export default function RegisterScreen() {
       <View style={themed(styles.inputContainer)}>
         <Text style={themed(styles.inputLabel)}>Username:</Text>
         <OutlinedTextField
-          value={username}
           onChangeText={setUsername}
           error={usernameError}
           setError={setUsernameError}
@@ -60,7 +55,6 @@ export default function RegisterScreen() {
         <Text style={themed(styles.inputLabel)}>Email:</Text>
         <OutlinedTextField
           ref={emailRef}
-          value={email}
           onChangeText={setEmail}
           error={emailError}
           setError={setEmailError}
@@ -76,7 +70,6 @@ export default function RegisterScreen() {
         <Text style={themed(styles.inputLabel)}>Password:</Text>
         <OutlinedTextField
           ref={passwordRef}
-          value={password}
           onChangeText={setPassword}
           secureTextEntry={true}
           error={passwordError}
@@ -93,7 +86,6 @@ export default function RegisterScreen() {
         <Text style={themed(styles.inputLabel)}>Confirm Password:</Text>
         <OutlinedTextField
           ref={confirmPasswordRef}
-          value={confirmPassword}
           onChangeText={setConfirmPassword}
           secureTextEntry={true}
           error={confirmPasswordError}

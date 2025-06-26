@@ -3,6 +3,9 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import { AuthStackParamList } from '../../../navigation/paramLists';
 import { AuthStackNames } from '../../../navigation/routes';
+import { Keyboard } from 'react-native';
+import { useAppDispatch } from '../../../redux/hook';
+import { signInEmailPassword } from '../../../stores/user.slice';
 
 export default function useLoginScreen() {
   type Props = NativeStackScreenProps<
@@ -10,17 +13,18 @@ export default function useLoginScreen() {
     typeof AuthStackNames.Login
   >;
   const navigation = useNavigation<Props['navigation']>();
+  const dispatch = useAppDispatch();
 
-  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const [usernameError, setUsernameError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const validateInput = () => {
     let isValid = true;
-    if (username.length < 3) {
-      setUsernameError('Username must be at least 3 characters long');
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setEmailError('Invalid email address');
       isValid = false;
     }
     if (password.length < 8) {
@@ -31,8 +35,9 @@ export default function useLoginScreen() {
   };
 
   const handleLogin = () => {
+    Keyboard.dismiss();
     if (validateInput()) {
-      console.log('Logging in...');
+      dispatch(signInEmailPassword({ email, password }));
     }
   };
 
@@ -41,14 +46,14 @@ export default function useLoginScreen() {
   };
 
   return {
-    username,
-    setUsername,
+    email,
+    setEmail,
     password,
     setPassword,
     handleLogin,
     handleForgetPassword,
-    usernameError,
-    setUsernameError,
+    emailError,
+    setEmailError,
     passwordError,
     setPasswordError,
   };

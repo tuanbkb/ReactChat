@@ -1,4 +1,5 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { useRef } from 'react';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Button from '../../../components/common/Button';
 import OutlinedTextField from '../../../components/common/OutlinedTextField';
 import { useAppTheme } from '../../../theme/theme.provider';
@@ -8,15 +9,15 @@ import useLoginScreen from './useLoginScreen';
 export default function LoginScreen() {
   const { themed } = useAppTheme();
 
+  const passwordRef = useRef<TextInput>(null);
+
   const {
-    username,
-    setUsername,
-    password,
+    setEmail,
     setPassword,
     handleLogin,
     handleForgetPassword,
-    usernameError,
-    setUsernameError,
+    emailError,
+    setEmailError,
     passwordError,
     setPasswordError,
   } = useLoginScreen();
@@ -24,33 +25,42 @@ export default function LoginScreen() {
   return (
     <View style={themed(styles.container)}>
       <View style={themed(styles.inputContainer)}>
-        <Text style={themed(styles.inputLabel)}>Username:</Text>
+        <Text style={themed(styles.inputLabel)}>Email:</Text>
         <OutlinedTextField
-          value={username}
-          onChangeText={setUsername}
-          placeholder="Username"
-          error={usernameError}
-          setError={setUsernameError}
-          leadingIconName='person'
+          onChangeText={setEmail}
+          placeholder="Email"
+          error={emailError}
+          setError={setEmailError}
+          leadingIconName="mail"
+          returnKeyType="next"
+          submitBehavior={'submit'}
+          onSubmitEditing={() =>
+            passwordRef.current && passwordRef.current.focus()
+          }
         />
       </View>
       <View style={themed(styles.inputContainer)}>
         <Text style={themed(styles.inputLabel)}>Password:</Text>
         <OutlinedTextField
-          value={password}
-          onChangeText={setPassword}
+          ref={passwordRef}
+          onChangeText={text => setPassword(text)}
           placeholder="Password"
           error={passwordError}
           setError={setPasswordError}
           secureTextEntry={true}
-          leadingIconName='key'
+          leadingIconName="key"
+          returnKeyType="go"
+          submitBehavior={'blurAndSubmit'}
+          onSubmitEditing={handleLogin}
         />
       </View>
       <View style={themed(styles.divider)} />
       <Button text="Login" onPress={handleLogin} />
       <View style={themed(styles.divider)} />
       <View style={themed(styles.forgotPasswordContainer)}>
-        <Text style={themed(styles.forgotPasswordText)}>Forgot your password?  </Text>
+        <Text style={themed(styles.forgotPasswordText)}>
+          Forgot your password?{' '}
+        </Text>
         <TouchableOpacity onPress={handleForgetPassword}>
           <Text style={themed(styles.forgotPasswordLink)}>Reset here!</Text>
         </TouchableOpacity>
